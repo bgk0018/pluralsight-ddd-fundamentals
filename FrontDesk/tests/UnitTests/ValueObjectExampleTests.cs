@@ -60,29 +60,6 @@ namespace UnitTests
     }
 
     [Fact]
-    public void DogsAreCloneable()
-    {
-      var cloneableDog = new AnimalType("Dog", "Chihuahua");
-
-      // Move clone feature from sheep to dog
-
-      //private AnimalType(AnimalType source)
-      //{
-      //  Species = source.Species;
-      //  Breed = source.Breed;
-      //}
-
-      //public AnimalType Clone()
-      //{
-      //  return new AnimalType(this);
-      //}
-
-      //var clonedDog = cloneableDog.Clone();
-      //Assert.Equal(cloneableDog, clonedDog);
-
-    }
-
-    [Fact]
     public void DogsAreMaybeEqual()
     {
       var bulldog = new AnimalType("Dog", "Bull Dog");

@@ -31,6 +31,29 @@ namespace FrontDesk.Core.ScheduleAggregate
       DateTimeConfirmed = dateTimeConfirmed;
     }
 
+    public Appointment(Guid id,
+        AppointmentType type,
+        Guid scheduleId,
+        Client client,
+        Doctor doctor,
+        Patient patient,
+        Room room,
+        DateTimeOffsetRange timeRange, // EF Core 5 cannot provide this type
+        string title,
+        DateTime? dateTimeConfirmed = null)
+    {
+      Id = Guard.Against.Default(id, nameof(id));
+      AppointmentTypeId = Guard.Against.NegativeOrZero(type.Id, nameof(type));
+      ScheduleId = Guard.Against.Default(scheduleId, nameof(scheduleId));
+      ClientId = Guard.Against.NegativeOrZero(client.Id, nameof(client));
+      DoctorId = Guard.Against.NegativeOrZero(doctor.Id, nameof(doctor));
+      PatientId = Guard.Against.NegativeOrZero(patient.Id, nameof(patient.Id));
+      RoomId = Guard.Against.NegativeOrZero(room.Id, nameof(room));
+      TimeRange = Guard.Against.Null(timeRange, nameof(timeRange));
+      Title = Guard.Against.NullOrEmpty(title, nameof(title));
+      DateTimeConfirmed = dateTimeConfirmed;
+    }
+
     private Appointment() { } // EF required
 
     public Guid ScheduleId { get; private set; }
@@ -42,7 +65,9 @@ namespace FrontDesk.Core.ScheduleAggregate
 
     public DateTimeOffsetRange TimeRange { get; private set; }
     public string Title { get; private set; }
-    public DateTimeOffset? DateTimeConfirmed { get; set; }
+
+
+    public DateTimeOffset? DateTimeConfirmed { get; private set; }
     public bool IsPotentiallyConflicting { get; set; }
 
     public void UpdateRoom(int newRoomId)
